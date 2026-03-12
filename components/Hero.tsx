@@ -177,7 +177,7 @@ const Hero: React.FC<HeroProps> = ({ onComplete }) => {
     <section
       id="home"
       className="relative w-full bg-[#FFFFFF] overflow-hidden"
-      style={{ height: '100dvh', minHeight: '-webkit-fill-available' }}
+      style={{ height: '100svh', minHeight: '-webkit-fill-available' }}
     >
       {/* Background */}
       <div className="absolute inset-0 z-0">
