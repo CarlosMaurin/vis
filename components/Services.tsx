@@ -238,26 +238,34 @@ const Services: React.FC = () => {
 
   useEffect(() => {
     const calc = () => {
-      const vh = window.innerHeight;
       const vw = window.innerWidth;
 
-      // Desktop screens unchanged. Mobile: 6.15 → 4.0 (3 card beats + title)
+      // ✅ FIX: usar screen.height en lugar de window.innerHeight.
+      // window.innerHeight cambia ~50-90px cada vez que el browser toolbar
+      // aparece o desaparece al cambiar dirección de scroll, disparando un
+      // reflow completo de la sección y causando el salto visible.
+      // screen.height es la altura física de la pantalla — estable, nunca cambia.
+      const stableVh = window.screen.height;
+
       let screens = 4.0;
       if (vw >= 768)  screens = 4.8;
       if (vw >= 1024) screens = 4.4;
       if (vw >= 1366) screens = 4.9;
-      if (vw < 768 && vh < 780) screens += 0.2;
-      if (vh < 720)  screens += 0.15;
+      if (vw < 768 && stableVh < 780) screens += 0.2;
+      if (stableVh < 720)  screens += 0.15;
 
-      setWrapperHeightPx(Math.round(vh * screens));
+      setWrapperHeightPx(Math.round(stableVh * screens));
       setNavOffsetPx(vw >= 768 ? 120 : 104);
     };
 
     calc();
-    window.addEventListener('resize', calc);
+    // ✅ FIX: solo orientationchange, NO 'resize'.
+    // En mobile, 'resize' dispara en cada toolbar toggle (= cada cambio de
+    // dirección de scroll), causando que wrapperHeightPx cambie y que
+    // useScroll recalcule scrollYProgress con el nuevo height — ese es el salto.
+    // orientationchange solo dispara al rotar físicamente el dispositivo.
     window.addEventListener('orientationchange', calc);
     return () => {
-      window.removeEventListener('resize', calc);
       window.removeEventListener('orientationchange', calc);
     };
   }, []);
@@ -368,8 +376,11 @@ const Services: React.FC = () => {
         className="relative"
         style={{ height: wrapperHeightPx ? `${wrapperHeightPx}px` : '520vh' }}
       >
-        {/* MOBILE SCROLL FIX #6: sticky h-screen → 100dvh para evitar reflows por toolbar */}
-        <div className="sticky top-0 w-full overflow-hidden px-6" style={{ height: '100dvh' }}>
+        {/* ✅ FIX: sticky 100svh en lugar de 100dvh. svh = Small Viewport Height,
+             siempre el viewport mínimo (toolbar visible), estable durante scroll.
+             dvh cambia explícitamente cuando el browser toolbar aparece/desaparece
+             — ese cambio de altura causaba el reflow y el salto visible en mobile. */}
+        <div className="sticky top-0 w-full overflow-hidden px-6" style={{ height: '100svh' }}>
           <div className="max-w-7xl mx-auto w-full h-full">
             <div className="h-full flex flex-col justify-center pt-28 md:pt-32 pb-16 md:pb-20">
 
