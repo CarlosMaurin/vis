@@ -191,11 +191,11 @@ const Testimonials: React.FC = () => {
 
   // ── Track isMobileView on resize ──────────────────────────────────────────
   useEffect(() => {
+    // ✅ FIX: orientationchange en lugar de resize para el toggle mobile/desktop.
+    // La vista mobile vs desktop no cambia por toolbar toggle, solo al rotar.
     const check = () => setIsMobileView(window.innerWidth < 768);
-    window.addEventListener('resize', check);
     window.addEventListener('orientationchange', check);
     return () => {
-      window.removeEventListener('resize', check);
       window.removeEventListener('orientationchange', check);
     };
   }, []);
@@ -256,12 +256,19 @@ const Testimonials: React.FC = () => {
     calculateBounds();
     const t1 = setTimeout(calculateBounds, 120);
     const t2 = setTimeout(calculateBounds, 300);
-    window.addEventListener('resize', calculateBounds);
+    // ✅ FIX: no disparar calculateBounds en mobile.
+    // En mobile, 'resize' se dispara en cada toolbar toggle (cambio de dirección
+    // de scroll), causando re-renders innecesarios y sumando jank al scroll.
+    // calculateBounds solo es necesario en desktop (scroll-jacking horizontal).
+    const handleResize = () => {
+      if (window.innerWidth >= 768) calculateBounds();
+    };
+    window.addEventListener('resize', handleResize);
     window.addEventListener('orientationchange', calculateBounds);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
-      window.removeEventListener('resize', calculateBounds);
+      window.removeEventListener('resize', handleResize);
       window.removeEventListener('orientationchange', calculateBounds);
     };
   }, [logosReady, calculateBounds]);
@@ -370,8 +377,8 @@ const Testimonials: React.FC = () => {
       {/* ══════════════════════════════════════════════════════════════════
           DESKTOP — sticky scroll-jacking, 100% original, zero changes
       ══════════════════════════════════════════════════════════════════ */}
-      {/* MOBILE SCROLL FIX #7: sticky h-screen → 100dvh (desktop only, clase hidden md:flex) */}
-      <div className="sticky top-0 w-full hidden md:flex flex-col items-center justify-center overflow-hidden pt-[clamp(72px,10vh,120px)]" style={{ height: '100dvh' }}>
+      {/* ✅ FIX: 100svh en lugar de 100dvh. Ver comentario en Services.tsx. */}
+      <div className="sticky top-0 w-full hidden md:flex flex-col items-center justify-center overflow-hidden pt-[clamp(72px,10vh,120px)]" style={{ height: '100svh' }}>
 
         <motion.div
           style={{ opacity: titleOpacity, scale: titleScale, y: titleY }}
