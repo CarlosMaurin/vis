@@ -13,7 +13,10 @@ const B2CCard: React.FC<B2CCardProps> = ({ type, title, number, image }) => {
       "
       style={{
         height: "clamp(320px, 52vh, 440px)",
-        maxHeight: "calc(100dvh - 240px)", /* FIX: 100dvh evita reflow por toolbar mobile */
+        // ✅ FIX: 100dvh → 100svh
+        // dvh cambia cuando el browser toolbar aparece/desaparece en mobile.
+        // svh (Small Viewport Height) es estable y no causa reflows.
+        maxHeight: "calc(100svh - 240px)",
       }}
     >
       <img
@@ -84,8 +87,12 @@ const B2CSection: React.FC = () => {
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
     checkMobile()
-    window.addEventListener("resize", checkMobile)
-    return () => window.removeEventListener("resize", checkMobile)
+    // ✅ FIX: 'resize' → 'orientationchange'
+    // La vista mobile/desktop no cambia por toolbar toggle (solo por rotación real
+    // del dispositivo). Escuchar 'resize' causaba re-renders innecesarios en cada
+    // cambio de dirección de scroll en mobile.
+    window.addEventListener("orientationchange", checkMobile)
+    return () => window.removeEventListener("orientationchange", checkMobile)
   }, [])
 
   useEffect(() => {
@@ -101,7 +108,6 @@ const B2CSection: React.FC = () => {
     return () => ro.disconnect()
   }, [])
 
-  // ✅ Order EXACTLY as requested
   const items: B2CCardProps[] = useMemo(
     () => [
       {
@@ -146,26 +152,20 @@ const B2CSection: React.FC = () => {
 
   const step = slotWidth + gapPx
 
-  // ✅ 3x for infinite loop
   const slides = useMemo(() => [...items, ...items, ...items], [items])
 
   const baseIndex = items.length
   const [index, setIndex] = useState(baseIndex)
 
-  // ✅ this controls whether we animate or instantly jump
   const [animateTrack, setAnimateTrack] = useState(true)
 
-  // ✅ keep an always-correct logical index for dots
   const logicalIndex = ((index % items.length) + items.length) % items.length
 
   const recenterIfNeeded = (nextIndex: number) => {
-    // Move within central block so we never reach ends
-    // We recenter when entering the outer third blocks.
     const leftEdge = items.length * 0.7
     const rightEdge = items.length * 2.3
 
     if (nextIndex < leftEdge) {
-      // Jump forward one block (invisible)
       const jumped = nextIndex + items.length
       setAnimateTrack(false)
       setIndex(jumped)
@@ -174,7 +174,6 @@ const B2CSection: React.FC = () => {
     }
 
     if (nextIndex > rightEdge) {
-      // Jump backward one block (invisible)
       const jumped = nextIndex - items.length
       setAnimateTrack(false)
       setIndex(jumped)
@@ -188,8 +187,6 @@ const B2CSection: React.FC = () => {
   const next = () => {
     setIndex((prev) => {
       const n = prev + 1
-      // allow the visible slide animation
-      // then recenter if needed (invisibly)
       return recenterIfNeeded(n)
     })
   }
@@ -265,7 +262,7 @@ const B2CSection: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* ✅ nav: smaller + a bit closer to cards */}
+          {/* nav */}
           <div className="flex flex-col items-center gap-3 mt-4 md:mt-5">
             <div className="flex items-center gap-2.5">
               <button
@@ -307,7 +304,6 @@ const B2CSection: React.FC = () => {
                   <button
                     key={i}
                     onClick={() => {
-                      // jump to that slide within the middle block
                       setAnimateTrack(true)
                       setIndex(baseIndex + i)
                     }}
