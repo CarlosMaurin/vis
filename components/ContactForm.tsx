@@ -90,7 +90,7 @@ const ContactForm: React.FC = () => {
                       </span>
                       <div className="leading-tight">
                         <div className="text-[10px] uppercase tracking-[0.2em] text-white/55 font-bold">Email</div>
-                        <div className="text-sm text-white/85">geremias@vis.com</div>
+                        <div className="text-sm text-white/85">villageintegralservices@gmail.com</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 text-white/75 hover:text-white/90 transition-colors">
@@ -99,7 +99,7 @@ const ContactForm: React.FC = () => {
                       </span>
                       <div className="leading-tight">
                         <div className="text-[10px] uppercase tracking-[0.2em] text-white/55 font-bold">Phone</div>
-                        <div className="text-sm text-white/85">+5493813567537</div>
+                        <div className="text-sm text-white/85">(970) 366-7761</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 text-white/75 hover:text-white/90 transition-colors">
@@ -108,7 +108,7 @@ const ContactForm: React.FC = () => {
                       </span>
                       <div className="leading-tight">
                         <div className="text-[10px] uppercase tracking-[0.2em] text-white/55 font-bold">Address</div>
-                        <div className="text-sm text-white/85">Aspen, CO</div>
+                        <div className="text-sm text-white/85">50 Harmony PI Ste 2, Aspen, CO</div>
                       </div>
                     </div>
                   </div>
