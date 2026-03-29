@@ -80,7 +80,7 @@ const ServiceCard: React.FC<AnimatedServiceCardProps> = ({
   const FOOTER_SAFE = 'clamp(72px, 10vh, 110px)';
 
   const borderGradient = isMobile && mobileInverted
-    ? 'conic-gradient(rgba(255,255,255,0.45), #7CA87A, rgba(255,255,255,0.45), #7CA87A, rgba(255,255,255,0.45))'
+    ? 'conic-gradient(#2E2D3A, #2E2D3A)'
     : 'conic-gradient(#316765, #7CA87A, #316765, #7CA87A, #316765)';
 
   const borderStyle: React.CSSProperties = {
