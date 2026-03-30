@@ -387,7 +387,7 @@ const TeamSection: React.FC = () => {
 
         <TeamCard
           name="Florencia Padilla"
-          role="Managing Partner"
+          role="Property Specialist"
           image="https://dl6bglhcfn2kh.cloudfront.net/9474/113986/FlorenciaPadilla-Web.jpg?version=1761504148"
           bgImage="https://res.cloudinary.com/deit2ncmp/image/upload/v1771612192/1_3_b9h6k4.png"
           bio="Florencia is a licensed real estate agent in Aspen and a certified travel agent. As a Property Specialist at VIS Home Services, she ensures every property is perfectly cared for during rentals, helping owners explore sales or investment opportunities. She also brings her travel expertise to create personalized experiences for tenants, making each stay in Aspen smooth, enjoyable, and memorable. With her attention to detail, warmth, and dedication, Florencia makes both homeowners and guests feel truly supported and valued."
