@@ -122,7 +122,7 @@ const B2CSection: React.FC = () => {
         title: "Custodial and maintenance support for HOAs, Boards and commercial buildings",
         number: "02",
         image:
-          "https://res.cloudinary.com/deit2ncmp/image/upload/v1771612192/4_iuoyoy.png",
+          "https://res.cloudinary.com/deit2ncmp/image/upload/v1774987747/Maintenance_in_progress__cleaning_underway_xm0v5v.png",
       },
       {
         type: "B2C",
@@ -136,7 +136,7 @@ const B2CSection: React.FC = () => {
         title: "Guest-facing concierge services for short-term rentals",
         number: "04",
         image:
-          "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1200",
+          "https://res.cloudinary.com/deit2ncmp/image/upload/v1774987745/concierge_ery55a.jpg",
       },
     ],
     []
