@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/deit2ncmp/image/upload/q_auto/f_auto/v1767404186/New-Logo-3_o27t3b.png" />
+    <title>V.I.S. | Property & Hospitality Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            screens: {
+              'laptop': '1366px',
+              'desktop': '1440px',
+              'wide': '1536px',
+              'fhd': '1920px',
+            },
+            colors: {
+              primary: '#316765',
+              accent: '#7CA87A',
+              dark: '#2E2D3A',
+              cream: '#F5F9FA'
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+              lemonmilk: ['LemonMilk', 'Montserrat', 'sans-serif'],
+              body: ['Montserrat', 'sans-serif']
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      @font-face {
+          font-family: 'LemonMilk';
+          src: url('https://db.onlinewebfonts.com/t/209127d1a58c06788b140993081e7498.woff2') format('woff2');
+          font-weight: normal;
+          font-style: normal;
+      }
+      /*
+       * MOBILE SCROLL FIX #1
+       * scroll-behavior: smooth en el <html> global causa que el browser intente
+       * animar hacia la nueva posición cada vez que la toolbar aparece/desaparece,
+       * generando los saltos visuales. Se maneja smooth scroll solo via JS donde se necesita.
+       */
+      html {
+        /* scroll-behavior: smooth; ← ELIMINADO: causa saltos en mobile */
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        /*
+         * MOBILE SCROLL FIX #2
+         * overscroll-behavior-y: none previene el "rubber band" / bounce en iOS
+         * que puede disparar reflows cuando se cambia dirección de scroll.
+         */
+        overscroll-behavior-y: none;
+        /*
+         * MOBILE SCROLL FIX #3
+         * touch-action: pan-y le indica al browser que solo usamos scroll vertical,
+         * lo que permite que el compositor del browser maneje el scroll sin pasar
+         * por el main thread, eliminando jank.
+         */
+        touch-action: pan-y;
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      textarea::-webkit-scrollbar {
+          width: 8px;
+      }
+      textarea::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+      }
+      textarea::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.3);
+          border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
